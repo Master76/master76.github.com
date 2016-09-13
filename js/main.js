@@ -3,7 +3,7 @@ var cvs;
 var ctx;
 const size = 320;
 const th = 400;
-const name = 'Master Yu';
+const name = 'from Master76';
 const text = ' My Greetings.';
 
 window.onload = function () {
@@ -41,7 +41,7 @@ function draw() {
     sy += size + 20;
     ctx.fillText(text, sx, sy);
 
-    ctx.font = '14px Consolas';
+    ctx.font = '12px Consolas';
     metrics = ctx.measureText(name);
     sx = getStartPixel(w, metrics.width);
     sy += 40;
