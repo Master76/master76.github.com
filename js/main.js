@@ -14,11 +14,6 @@ window.onload = function () {
     setInterval(draw, tick);
 }
 
-window.onresize = function () {
-    cvs.width = window.innerWidth - 10;
-    cvs.height = window.innerHeight - 10;
-}
-
 function init() {
     cvs = document.getElementById('cvs');
     ctx = cvs.getContext('2d');
@@ -27,6 +22,10 @@ function init() {
 }
 
 function draw() {
+
+    cvs.width = window.innerWidth - 10;
+    cvs.height = window.innerHeight - 10;
+
     var metrics;
     var w = cvs.width;
     var h = cvs.height;
