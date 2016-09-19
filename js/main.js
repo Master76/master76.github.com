@@ -5,6 +5,7 @@ const th = 400;
 const name = 'from Master76';
 const text = ' My Greetings.';
 var lastVec = { x: 0, y: 0 };
+var counter = 0;
 
 const tick = 25;
 
@@ -29,8 +30,8 @@ function draw() {
     var metrics;
     var w = cvs.width;
     var h = cvs.height;
-    var sx = getStartPixel(w, size);
-    var sy = getStartPixel(h, th) - 40;
+    var sx = gs(w, size);
+    var sy = gs(h, th) - 40;
 
     ctx.clearRect(0, 0, cvs.width, cvs.height);
     ctx.save();
@@ -109,9 +110,11 @@ function draw() {
     ctx.scale(size / 1792, size / 1792);
 
     var gradient = ctx.createLinearGradient(0, 0, 1792, 1792);
-    gradient.addColorStop("0.2", "red");
-    gradient.addColorStop("0.5", "black");
-    gradient.addColorStop("0.8", "blue");
+    var baseoffset = counter++ / 200;
+    gradient.addColorStop(to(0, baseoffset), "black");
+    gradient.addColorStop(to(0.25, baseoffset), "red");
+    gradient.addColorStop(to(0.5, baseoffset), "black");
+    gradient.addColorStop(to(0.75, baseoffset), "blue");
     ctx.fillStyle = gradient;
     ctx.fill();
     ctx.restore();
@@ -119,24 +122,29 @@ function draw() {
     ctx.save();
     ctx.font = '24px Consolas';
     metrics = ctx.measureText(text);
-    sx = getStartPixel(w, metrics.width);
+    sx = gs(w, metrics.width);
     ctx.translate(0, sy + size + 20);
     ctx.fillText(text, sx, 0);
 
     ctx.font = '12px Consolas';
     metrics = ctx.measureText(name);
-    sx = getStartPixel(w, metrics.width);
+    sx = gs(w, metrics.width);
     ctx.translate(0, 40);
     ctx.fillText(name, sx, 0);
 
     ctx.restore();
+    counter %= 200;
 }
 
-function getStartPixel(scope, item, offset) {
+function gs(scope, item, offset) {
     var rtn = (scope - item) / 2;
     if (offset)
         rtn += offset;
     return rtn;
+}
+
+function to(offset, baseoffset) {
+    return (offset + baseoffset) % 1;
 }
 
 function M (x, y) {
